@@ -68,7 +68,9 @@ section h2{font-size:clamp(1.7rem,6vw,2.4rem);font-weight:800;margin-bottom:12px
 .work h3{font-size:1.2rem}
 .work .k{color:var(--link);font-weight:700;margin:2px 0 8px}
 .work p{margin:0 0 12px;color:var(--muted)}
-.work a{font-weight:700}
+.work a{display:inline-block;padding:9px 16px;border-radius:10px;background:var(--accent);color:#fff;font:700 .85rem Manrope,sans-serif;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s}
+.work a:hover{background:var(--brand);transform:translateY(-2px);box-shadow:0 6px 14px rgba(5,148,208,.3)}
+.work a:active{transform:scale(.97)}
 .note{margin-top:22px;color:var(--muted);font-size:.95rem}
 @media(min-width:720px){.packs{grid-template-columns:repeat(3,1fr)}.rules{grid-template-columns:1fr 1fr}.works{grid-template-columns:repeat(2,1fr)}}
 
