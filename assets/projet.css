@@ -1,0 +1,38 @@
+/* Biljap Soft – fiche projet */
+.phero{padding:20px 22px 52px}
+.phero .kick{margin:0 0 10px;color:var(--sky);font:800 1rem Manrope,sans-serif}
+.phero h1{font-size:clamp(2rem,8vw,3.4rem);font-weight:800;max-width:18ch}
+.phero .sub{margin:18px 0 0;color:#cfe6f0;max-width:52ch}
+.phero .badge{display:inline-block;margin:20px 0 0;padding:6px 14px;border:2px solid var(--sky);border-radius:99px;color:#fff;font:700 .9rem Manrope,sans-serif}
+.js .phero h1{animation:rise .8s both}
+.js .phero .kick,.js .phero .sub,.js .phero .badge{animation:rise .8s .12s both}
+
+#fiche>section{padding:48px 0}
+#fiche>section:first-child{padding-top:40px}
+.cover{margin:0}
+.cover button{display:block;width:100%;padding:0;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.cover img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;transition:transform .6s}
+@media (hover:hover){.cover button:hover img{transform:scale(1.03)}}
+
+.infos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:28px 0 0;border-top:2px solid var(--line)}
+.infos div{padding:14px 16px 14px 0;border-bottom:2px solid var(--line)}
+.infos dt{color:var(--muted);font:700 .95rem Manrope,sans-serif}
+.infos dd{margin:2px 0 0;font-weight:700}
+
+.pal{display:flex;flex-wrap:wrap;gap:12px;margin:0;padding:0;list-style:none}
+.pal li{display:flex;align-items:center;gap:10px;border:2px solid var(--line);border-radius:99px;padding:6px 16px 6px 8px;background:var(--bg);font-weight:700}
+.pal i{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:block}
+.pal li.t{padding-left:16px}
+
+.gal{display:grid;gap:14px}
+.gal button{display:block;padding:0;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.gal img{display:block;width:100%;height:auto}
+@media(min-width:720px){.gal{grid-template-columns:repeat(2,1fr)}}
+
+.offre .pxl{margin:8px 0 22px;color:var(--sky);font:800 clamp(1.8rem,7vw,2.6rem) Manrope,sans-serif}
+.offre .pxl small{font:700 1.05rem Manrope,sans-serif;color:#cfe6f0}
+.offre .btn.main{background:var(--sky);color:var(--ink)}
+
+.thumb.flat{padding:0;display:block}
+.thumb.flat img{width:100%;height:180px;object-fit:cover;display:block}
+.others .work .thumb{cursor:auto}

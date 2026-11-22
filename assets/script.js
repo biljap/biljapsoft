@@ -3,7 +3,7 @@
   'use strict';
   var d = document, root = d.documentElement;
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var WA = 'whatsapp://send?phone=243899829244';
+  var WA = 'https://wa.me/243899829244';
   root.classList.add('js');
 
   function $(s, c) { return (c || d).querySelector(s); }

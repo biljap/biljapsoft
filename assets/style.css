@@ -109,3 +109,7 @@ footer b{color:#fff;font-family:Manrope,sans-serif}
 
 .icons img{width:28px;height:28px;display:block}
 .hero img.art{height:auto}
+
+/* Lien « Voir le projet » du portfolio */
+.work a.sec{background:transparent;color:var(--link);border:2px solid var(--accent);padding:7px 14px;margin:0 8px 8px 0}
+.work a.sec:hover{background:var(--accent);color:#fff}
