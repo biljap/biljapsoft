@@ -26,5 +26,16 @@
       box.className = 'avis';
       box.innerHTML = liste.map(carte).join('');
     })
-    .catch(function () { /* l'encart « premiers avis » reste affiché */ });
+    .catch(function () { /* l'encart « premiers avis » reste affiché */[
+  {
+    "nom": "Nom du client",
+    "role": "Gérant",
+    "entreprise": "Nom de l’entreprise",
+    "service": "Identité visuelle",
+    "texte": "Le texte exact de l’avis, tel que le client l’a écrit.",
+    "note": 5,
+    "projet": "nom-du-projet"
+  }
+]
+});
 })();
