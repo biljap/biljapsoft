@@ -26,5 +26,16 @@
       box.className = 'avis';
       box.innerHTML = liste.map(carte).join('');
     })
-    .catch(function () { /* l'encart « premiers avis » reste affiché */ });
-})();
+    .catch(function () { /* l'encart « premiers avis » reste 
+    ([
+  {
+    "nom": "Junior Baleke",
+    "role": "Gérant",
+    "entreprise": "Café kivu",
+    "service": "Identité visuelle",
+    "texte": "J'apprécie le travail 🤜",
+    "note": 5,
+    "projet": "Rénovation"
+  }
+])
+;
