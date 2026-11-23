@@ -1,0 +1,25 @@
+/* Biljap Soft – avis clients et localisation */
+.avis{display:grid;gap:18px}
+@media(min-width:720px){.avis{grid-template-columns:repeat(2,1fr)}}
+.avis figure{margin:0;display:flex;flex-direction:column;justify-content:space-between;gap:16px;border:2px solid var(--line);border-radius:14px;padding:22px;background:var(--bg)}
+.avis blockquote{margin:0;font:600 1.1rem/1.55 Manrope,sans-serif}
+.avis figcaption{color:var(--muted);font-size:.95rem;line-height:1.45}
+.avis figcaption b{display:block;color:var(--text);font:800 1.05rem Manrope,sans-serif}
+.avis .stars{color:var(--link);font-size:1.1rem;letter-spacing:.12em}
+.avis figcaption a{font-weight:700}
+.vide{border:2px dashed var(--line);border-radius:14px;padding:24px;max-width:640px;background:var(--bg)}
+.vide b{display:block;font:800 1.2rem Manrope,sans-serif;margin-bottom:6px}
+.vide p{margin:0;color:var(--muted)}
+.avis-cta{margin-top:26px}
+.btn.line{border:2px solid var(--brand);color:var(--link);background:transparent}
+
+.loc{display:grid;gap:26px}
+@media(min-width:760px){.loc{grid-template-columns:1fr 1.35fr;align-items:start}}
+.loc dl{margin:0 0 22px;border-top:2px solid var(--line)}
+.loc dl div{padding:12px 0;border-bottom:2px solid var(--line)}
+.loc dt{color:var(--muted);font:700 .95rem Manrope,sans-serif}
+.loc dd{margin:2px 0 0;font-weight:700}
+.loc .btns{gap:10px}
+.map{border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+.map iframe{display:block;width:100%;height:340px;border:0}
+.map-note{margin:10px 0 0;color:var(--muted);font-size:.92rem}
