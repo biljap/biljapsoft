@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<title>Mon compte – Biljap Soft</title>
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Manrope:wght@600;700;800&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+<link rel="stylesheet" href="assets/compte.css">
+<link rel="stylesheet" href="assets/animations.css">
+<script src="assets/script.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
+<script src="assets/supabase-config.js" defer></script>
+<script src="assets/visites.js" defer></script>
+<script src="assets/compte.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="wrap bar">
+    <a class="logo" href="index.html" aria-label="Biljap Soft, retour au site"><img src="assets/logo-biljap-blanc.png" alt="Biljap, créativité et innovation" height="46" style="height:46px;width:auto;display:block"></a>
+    <a class="tel" href="index.html">← Le site</a>
+  </div>
+  <div class="wrap phero">
+    <h1>Mon compte</h1>
+    <p class="sub">Suivez vos commandes avec Biljap Soft.</p>
+  </div>
+</header>
+<main>
+<section id="vue-chargement"><div class="wrap"><p class="lead">Chargement…</p></div></section>
+
+<section id="vue-auth" hidden>
+  <div class="wrap">
+    <div class="card">
+      <div class="tabs" role="tablist">
+        <button type="button" id="tab-connexion" role="tab" aria-selected="true">Connexion</button>
+        <button type="button" id="tab-inscription" role="tab" aria-selected="false">Inscription</button>
+      </div>
+      <form id="f-connexion" novalidate>
+        <label for="c-email">E-mail</label>
+        <input id="c-email" name="email" type="email" autocomplete="email" required>
+        <label for="c-mdp">Mot de passe</label>
+        <input id="c-mdp" name="mdp" type="password" autocomplete="current-password" required>
+        <button class="btn main full" type="submit">Me connecter</button>
+        <button class="lien" type="button" id="oubli">Mot de passe oublié ?</button>
+      </form>
+      <form id="f-inscription" novalidate hidden>
+        <label for="i-nom">Nom complet</label>
+        <input id="i-nom" name="nom" type="text" autocomplete="name" required>
+        <label for="i-tel">Téléphone (WhatsApp)</label>
+        <input id="i-tel" name="tel" type="tel" autocomplete="tel" placeholder="+243 …">
+        <label for="i-email">E-mail</label>
+        <input id="i-email" name="email" type="email" autocomplete="email" required>
+        <label for="i-mdp">Mot de passe (8 caractères minimum)</label>
+        <input id="i-mdp" name="mdp" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="btn main full" type="submit">Créer mon compte</button>
+      </form>
+      <p class="msg" id="msg-auth" role="status" aria-live="polite"></p>
+    </div>
+    <p class="conf">Vos coordonnées et vos commandes ne sont visibles que par vous et par Biljap Soft. Les visites du site sont comptées de façon anonyme, avec un identifiant aléatoire gardé sur votre appareil.</p>
+  </div>
+</section>
+
+<section id="vue-mdp" hidden>
+  <div class="wrap">
+    <div class="card">
+      <h2>Nouveau mot de passe</h2>
+      <form id="f-mdp" novalidate>
+        <label for="n-mdp">Nouveau mot de passe (8 caractères minimum)</label>
+        <input id="n-mdp" name="mdp" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="btn main full" type="submit">Enregistrer</button>
+      </form>
+      <p class="msg" id="msg-mdp" role="status" aria-live="polite"></p>
+    </div>
+  </div>
+</section>
+
+<section id="vue-client" hidden>
+  <div class="wrap">
+    <div class="entete"><h2 id="bonjour">Bonjour</h2><button class="lien" type="button" id="deco">Me déconnecter</button></div>
+    <p class="lead">Vos commandes réussies chez Biljap Soft.</p>
+    <div class="liste" id="mes-commandes"></div>
+    <p class="note">Une question sur une commande ? <a href="https://wa.me/243899829244">Écrivez-nous sur WhatsApp</a>.</p>
+  </div>
+</section>
+
+<section class="alt" id="vue-admin" hidden>
+  <div class="wrap">
+    <h2>Tableau de bord</h2>
+    <p class="lead">Réservé à l’administrateur.</p>
+    <div class="stats" id="stats"></div>
+
+    <h3 class="sous">Enregistrer une commande réussie</h3>
+    <form id="f-commande" class="card large" novalidate>
+      <div class="grid2">
+        <div><label for="k-client">Client</label><select id="k-client" name="client" required></select></div>
+        <div><label for="k-service">Service ou pack</label><input id="k-service" name="service" list="services" required><datalist id="services">
+          <option value="Identité visuelle"><option value="Visuels pour réseaux sociaux"><option value="Vidéos promotionnelles"><option value="Supports marketing sur mesure"><option value="Sites web"><option value="Pack Démarrage"><option value="Pack Commerce"><option value="Pack Présence en ligne"><option value="Offre Pro"><option value="Offre Premium"><option value="Abonnement Essentiel"><option value="Abonnement Pro"><option value="Abonnement Premium"></datalist></div>
+        <div><label for="k-montant">Montant payé (USD)</label><input id="k-montant" name="montant" type="text" inputmode="decimal" required></div>
+        <div><label for="k-mode">Mode de paiement</label><select id="k-mode" name="mode"><option value="mobile_money">Mobile Money</option><option value="virement">Virement</option><option value="especes">Espèces</option></select></div>
+        <div><label for="k-ref">Référence du paiement</label><input id="k-ref" name="ref" type="text"></div>
+        <div><label for="k-desc">Détail</label><input id="k-desc" name="desc" type="text"></div>
+      </div>
+      <button class="btn main" type="submit">Enregistrer la commande</button>
+      <p class="msg" id="msg-cmd" role="status" aria-live="polite"></p>
+    </form>
+
+    <h3 class="sous">Dernières commandes</h3>
+    <div class="liste" id="admin-commandes"></div>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="wrap">
+    <img src="assets/logo-biljap-blanc.png" alt="Biljap, créativité et innovation" style="height:84px;width:auto;display:block;margin-bottom:12px"><b>© 2026 Biljap Soft</b> · Tous droits réservés<br>Lubumbashi, RDC
+  </div>
+</footer>
+</body>
+</html>
