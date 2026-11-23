@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Diagnostic de la base – Biljap Soft</title>
-<script src="assets/supabase-config.js?v=2"></script>
 <style>
 body{font:17px/1.6 system-ui,sans-serif;max-width:640px;margin:0 auto;padding:20px;color:#051C24;background:#fff}
 h1{font-size:1.6rem} label{display:block;margin:14px 0 4px;font-weight:700}
@@ -29,13 +28,18 @@ pre{white-space:pre-wrap;word-break:break-word;background:#f0f7fa;border:2px sol
 <pre id="o2"></pre>
 <script>
 (function () {
+  var cs = document.createElement('script');   // charge toujours la version la plus récente du réglage
+  cs.src = 'assets/supabase-config.js?t=' + Date.now();
+  cs.onload = cs.onerror = demarrer;
+  document.head.appendChild(cs);
+  function demarrer() {
   var c = window.BILJAP_DB || {}, u = c.url || '', k = c.key || '';
   var avis = [];
   if (!u || u.indexOf('VOTRE') !== -1) avis.push('ERREUR : l’adresse du projet n’est pas remplie.');
   if (u && !/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(u)) avis.push('ATTENTION : l’adresse doit ressembler à https://xxxx.supabase.co, sans « / » à la fin ni « /rest/v1 ».');
   if (!k || k.indexOf('VOTRE') !== -1) avis.push('ERREUR : la clé publique n’est pas remplie.');
   if (/^sb_secret_|service_role/i.test(k)) avis.push('DANGER : ceci est une clé secrète. Retirez-la du site et utilisez la clé publique.');
-  document.getElementById('conf').textContent = 'Adresse : ' + u + '\nClé : ' + k.slice(0, 14) + '… (' + k.length + ' caractères)' + (avis.length ? '\n\n' + avis.join('\n') : '\n\nFormat correct.');
+  document.getElementById('conf').textContent = 'Adresse lue : ' + u + '\nClé : ' + k.slice(0, 14) + '… (' + k.length + ' caractères)' + (avis.length ? '\n\n' + avis.join('\n') : '\n\nFormat correct.');
   function montrer(id, r) { return r.text().then(function (t) { document.getElementById(id).textContent = 'Code HTTP : ' + r.status + '\n' + t; }); }
   function echec(id, e) { document.getElementById(id).textContent = 'Échec réseau : ' + e.message + '\n(adresse du projet incorrecte, ou pas de connexion)'; }
   document.getElementById('b1').onclick = function () {
@@ -48,6 +52,7 @@ pre{white-space:pre-wrap;word-break:break-word;background:#f0f7fa;border:2px sol
       body: JSON.stringify({ email: document.getElementById('e').value.trim(), password: document.getElementById('p').value }) })
       .then(function (r) { return montrer('o2', r); }).catch(function (e) { echec('o2', e); });
   };
+  }
 })();
 </script>
 </body>
