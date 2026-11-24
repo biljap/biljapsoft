@@ -1,5 +1,5 @@
 [
-    {
+ {
     "nom": "Junior Bakete",
     "role": "Gérant",
     "entreprise": "Café kivu",
@@ -7,5 +7,14 @@
     "texte": "J'ai apprécié le travail 🤜.",
     "note": 5,
     "projet": "Rénovation"
+  },
+ {
+    "nom": "Dieumerci Ndemba",
+    "role": "Directeur marketing",
+    "entreprise": "Estra Link",
+    "service": "calendrier personnalisé.",
+    "texte": "🔥🔥🔥",
+    "note": 8,
+    "projet": "Support marketing sur mesure"
   }
 ]
