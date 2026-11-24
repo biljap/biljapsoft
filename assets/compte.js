@@ -15,13 +15,19 @@
   function jour(t) { return new Date(t).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }); }
   var MODES = { mobile_money: 'Mobile Money', virement: 'Virement', especes: 'Espèces' };
   function erreur(e) {
-    var m = (e && e.message) || '';
-    if (/invalid login/i.test(m)) return 'E-mail ou mot de passe incorrect.';
-    if (/not confirmed/i.test(m)) return 'Confirmez d’abord votre adresse e-mail (message envoyé à l’inscription).';
-    if (/already registered/i.test(m)) return 'Un compte existe déjà avec cet e-mail.';
-    if (/password/i.test(m) && /characters|short|weak/i.test(m)) return 'Mot de passe trop court : 8 caractères minimum.';
-    if (/rate limit|too many/i.test(m)) return 'Trop de tentatives. Réessayez dans quelques minutes.';
-    return 'Une erreur est survenue. Réessayez.';
+    var m = (e && e.message) || '', t = m + ' ' + ((e && e.code) || '');
+    if (/invalid login/i.test(t)) return 'E-mail ou mot de passe incorrect.';
+    if (/not confirmed/i.test(t)) return 'Confirmez d’abord votre adresse e-mail (message envoyé à l’inscription).';
+    if (/already registered|user_already_exists/i.test(t)) return 'Un compte existe déjà avec cet e-mail.';
+    if (/not authorized|email_address_not_authorized/i.test(t)) return 'Cette adresse ne peut pas recevoir d’e-mail pour le moment : l’envoi d’e-mails est à terminer de régler dans Supabase.';
+    if (/rate limit|too many|over_email_send_rate_limit/i.test(t)) return 'Trop de demandes pour le moment. Réessayez dans une heure.';
+    if (/sending confirmation email|sending recovery email/i.test(t)) return 'L’e-mail n’a pas pu être envoyé : l’envoi d’e-mails est à terminer de régler dans Supabase.';
+    if (/database error saving new user/i.test(t)) return 'Le compte n’a pas pu être enregistré dans la base : vérifiez que le script 1-schema.sql a bien été exécuté en entier.';
+    if (/invalid api key|invalid apikey/i.test(t)) return 'La clé publique est incorrecte dans assets/supabase-config.js.';
+    if (/failed to fetch|networkerror|network request/i.test(t)) return 'Impossible de joindre la base : vérifiez l’adresse du projet dans assets/supabase-config.js, puis votre connexion.';
+    if (/signups? (are )?(not allowed|disabled)|signup_disabled/i.test(t)) return 'Les inscriptions sont désactivées dans Supabase.';
+    if (/password/i.test(t) && /characters|short|weak/i.test(t)) return 'Mot de passe trop court : 8 caractères minimum.';
+    return 'Une erreur est survenue. Réessayez. (Détail : ' + (m || 'inconnu') + ')';
   }
 
   if (!cfg.url || !cfg.key || cfg.url.indexOf('VOTRE') !== -1 || !window.supabase) {
@@ -56,10 +62,10 @@
     if (!f.nom.value.trim() || !f.email.value.trim()) { dire(m, 'Le nom et l’e-mail sont obligatoires.', 'err'); return; }
     if (f.mdp.value.length < 8) { dire(m, 'Mot de passe trop court : 8 caractères minimum.', 'err'); return; }
     dire(m, 'Création du compte…');
-    var r = await db.auth.signUp({
+    var r; try { r = await db.auth.signUp({
       email: f.email.value.trim(), password: f.mdp.value,
       options: { data: { nom: f.nom.value.trim(), telephone: f.tel.value.trim() }, emailRedirectTo: location.origin + location.pathname }
-    });
+    }); } catch (x) { r = { error: x }; }
     if (r.error) { dire(m, erreur(r.error), 'err'); return; }
     if (!r.data.session) dire(m, 'Compte créé. Un e-mail de confirmation vous a été envoyé : cliquez sur le lien, puis connectez-vous.', 'ok');
   });
@@ -127,11 +133,21 @@
     if (!f.service.value.trim()) { dire(m, 'Indiquez le service ou le pack.', 'err'); return; }
     if (!(montant > 0)) { dire(m, 'Saisissez un montant supérieur à 0.', 'err'); return; }
     dire(m, 'Enregistrement…');
-    var r = await db.from('commandes').insert({
-      client_id: f.client.value, service: f.service.value.trim(), description: f.desc.value.trim() || null,
-      montant_usd: montant, mode_paiement: f.mode.value, reference_paiement: f.ref.value.trim() || null
-    });
-    if (r.error) { dire(m, 'Échec de l’enregistrement : ' + r.error.message, 'err'); return; }
+    var r;
+    try {
+      r = await db.from('commandes').insert({
+        client_id: f.client.value, service: f.service.value.trim(), description: f.desc.value.trim() || null,
+        montant_usd: montant, mode_paiement: f.mode.value, reference_paiement: f.ref.value.trim() || null
+      });
+    } catch (x) { r = { error: x }; }
+    if (r.error) {
+      if (/load failed|failed to fetch|network/i.test(r.error.message || '')) {
+        dire(m, 'La connexion a été interrompue. Regardez la liste « Dernières commandes » plus bas : si la commande y figure, elle est bien enregistrée ; sinon, réessayez.', 'err');
+        tableauDeBord();
+        return;
+      }
+      dire(m, 'Échec de l’enregistrement : ' + r.error.message, 'err'); return;
+    }
     e.target.reset(); dire(m, 'Commande enregistrée.', 'ok'); tableauDeBord();
   });
   $('#admin-commandes').addEventListener('click', async function (e) {
