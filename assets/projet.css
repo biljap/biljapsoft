@@ -27,6 +27,7 @@
 .gal{display:grid;gap:14px}
 .gal button{display:block;padding:0;border:2px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface);cursor:zoom-in}
 .gal img{display:block;width:100%;height:auto}
+.vid video{display:block;width:100%;height:auto;max-height:80vh;border:2px solid var(--line);border-radius:14px;background:#000}
 @media(min-width:720px){.gal{grid-template-columns:repeat(2,1fr)}}
 
 .offre .pxl{margin:8px 0 22px;color:var(--sky);font:800 clamp(1.8rem,7vw,2.6rem) Manrope,sans-serif}
@@ -34,5 +35,5 @@
 .offre .btn.main{background:var(--sky);color:var(--ink)}
 
 .thumb.flat{padding:0;display:block}
-.thumb.flat img{width:100%;height:180px;object-fit:cover;display:block}
+.thumb.flat img,.thumb.flat video{width:100%;height:180px;object-fit:cover;display:block}
 .others .work .thumb{cursor:auto}

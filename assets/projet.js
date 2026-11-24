@@ -23,6 +23,28 @@
     return '<button type="button" data-zoom="' + esc(src) + '" data-alt="' + esc(alt) + '" aria-label="Agrandir : ' + esc(alt) + '"><img src="' + esc(src) + '" alt="' + esc(alt) + '"></button>';
   }
 
+  /* Photo ou vidéo : une vidéo peut être indiquée dans « video », ou directement dans « image » */
+  var RE_VIDEO = /\.(webm|mp4|m4v|mov|ogv)(\?.*)?$/i;
+  var TYPES = { webm: 'video/webm', mp4: 'video/mp4', m4v: 'video/mp4', mov: 'video/quicktime', ogv: 'video/ogg' };
+  function estVideo(u) { return RE_VIDEO.test(u || ''); }
+  function sourceVideo(o) { return o.video || (estVideo(o.image) ? o.image : ''); }
+  function lecteur(src, mp4, poster, alt) {
+    var m = RE_VIDEO.exec(src), t = m ? TYPES[m[1].toLowerCase()] : '';
+    return '<div class="vid"><video controls playsinline preload="metadata"' + (poster ? ' poster="' + esc(poster) + '"' : '') + ' aria-label="' + esc(alt) + '">' +
+      '<source src="' + esc(src) + '"' + (t ? ' type="' + t + '"' : '') + '>' +
+      (mp4 && mp4 !== src ? '<source src="' + esc(mp4) + '" type="video/mp4">' : '') +
+      '<p>Votre navigateur ne peut pas lire cette vidéo. <a href="' + esc(src) + '">Télécharger la vidéo</a></p></video></div>';
+  }
+  function visuel(p) {
+    var v = sourceVideo(p);
+    return v ? lecteur(v, p.video_mp4, p.poster, p.alt || p.titre) : zoomBtn(p.image, p.alt || p.titre);
+  }
+  function vignette(x) {
+    var v = sourceVideo(x);
+    return v ? '<video src="' + esc(v) + '#t=0.1" preload="metadata" muted playsinline' + (x.poster ? ' poster="' + esc(x.poster) + '"' : '') + ' aria-label="' + esc(x.alt || x.titre) + '" width="320" height="180"></video>'
+             : '<img src="' + esc(x.image) + '" alt="' + esc(x.alt || x.titre) + '" width="320" height="180">';
+  }
+
   function render(p, all) {
     d.title = p.titre + ' – Biljap Soft';
     var meta = $('meta[name="description"]');
@@ -33,7 +55,7 @@
     if (p.exemple) $('#p-badge').hidden = false;
 
     var msg = 'Bonjour Biljap Soft, j’ai vu le projet « ' + p.titre + ' » sur votre site. Je souhaite un devis pour : ' + p.service + ' (' + p.prix + ').';
-    var h = '<section><div class="wrap"><figure class="cover">' + zoomBtn(p.image, p.alt || p.titre) + '</figure>' +
+    var h = '<section><div class="wrap"><figure class="cover">' + visuel(p) + '</figure>' +
       '<dl class="infos">' + info('Type de projet', p.categorie) + info('Secteur', p.secteur) +
       info('Prestations', (p.prestations || []).join(', ')) + (p.exemple ? info('Statut', 'Projet d’exemple') : '') + '</dl></div></section>';
 
@@ -48,7 +70,7 @@
     }
     if (p.galerie && p.galerie.length) {
       h += '<section><div class="wrap"><h2>En images</h2><div class="gal">';
-      p.galerie.forEach(function (g) { h += zoomBtn(g.src, g.alt || p.titre); });
+      p.galerie.forEach(function (g) { h += estVideo(g.src) ? lecteur(g.src, g.video_mp4, g.poster, g.alt || p.titre) : zoomBtn(g.src, g.alt || p.titre); });
       h += '</div></div></section>';
     }
 
@@ -62,7 +84,7 @@
     if (autres.length) {
       h += '<section class="others"><div class="wrap"><h2>Autres projets</h2><div class="works">';
       autres.forEach(function (x) {
-        h += '<article class="work"><div class="thumb flat"><img src="' + esc(x.image) + '" alt="' + esc(x.alt || x.titre) + '" width="320" height="180"></div>' +
+        h += '<article class="work"><div class="thumb flat">' + vignette(x) + '</div>' +
           '<div class="t"><h3>' + esc(x.titre) + '</h3><div class="k">' + esc(x.categorie) + '</div><p>' + esc(x.resume) + '</p>' +
           '<a href="projet.html?id=' + encodeURIComponent(x.id) + '">Voir le projet</a></div></article>';
       });
