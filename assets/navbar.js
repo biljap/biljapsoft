@@ -11,6 +11,7 @@
 
   function ouvert() { return nav.classList.contains('open'); }
   function ouvrir() {
+    nav.classList.remove('cache');
     nav.classList.add('open');
     burger.setAttribute('aria-expanded', 'true');
     burger.setAttribute('aria-label', 'Fermer le menu');
@@ -29,10 +30,23 @@
   large.addEventListener ? large.addEventListener('change', function () { if (large.matches) fermer(false); })
                          : large.addListener(function () { if (large.matches) fermer(false); });
 
-  /* Fond flou dès que la page défile */
-  function fond() { nav.classList.toggle('solid', window.pageYOffset > 24); }
-  window.addEventListener('scroll', fond, { passive: true });
-  fond();
+  /* Fond flou dès que la page défile ; la barre se cache en descendant et réapparaît en remontant */
+  var dernier = window.pageYOffset, attente = false, SEUIL = 8, HAUT = 90;
+  function defile() {
+    attente = false;
+    var y = window.pageYOffset, max = document.documentElement.scrollHeight - window.innerHeight;
+    nav.classList.toggle('solid', y > 24);
+    if (y < 0 || y > max) return;                               // rebond élastique en bord de page (iPhone)
+    var delta = y - dernier;
+    if (ouvert() || y < HAUT) { nav.classList.remove('cache'); dernier = y; return; }
+    if (delta > SEUIL) { nav.classList.add('cache'); dernier = y; }
+    else if (delta < -SEUIL) { nav.classList.remove('cache'); dernier = y; }
+  }
+  window.addEventListener('scroll', function () {
+    if (!attente) { attente = true; requestAnimationFrame(defile); }
+  }, { passive: true });
+  nav.addEventListener('focusin', function () { nav.classList.remove('cache'); });   // la navigation au clavier la fait réapparaître
+  defile();
 
   /* Lien de la section affichée */
   if ('IntersectionObserver' in window) {
