@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   /* Réglages du carrousel */
-  var SENS = 'gauche-droite';   // les avis défilent de la gauche vers la droite ; mettre 'droite-gauche' pour inverser
+  var SENS = 'droite-gauche';   // les avis défilent de la gauche vers la droite ; mettre 'droite-gauche' pour inverser
   var DELAI = 6000;             // temps d'affichage de chaque avis (millisecondes)
   var DUREE = 600;              // durée du glissement (millisecondes)
 
