@@ -113,3 +113,10 @@ footer b{color:#fff;font-family:Manrope,sans-serif}
 /* Lien « Voir le projet » du portfolio */
 .work a.sec{background:transparent;color:var(--link);border:2px solid var(--accent);padding:7px 14px;margin:0 8px 8px 0}
 .work a.sec:hover{background:var(--accent);color:#fff}
+
+/* Carte de portfolio avec vidéo */
+.thumb-video{position:relative;overflow:hidden;cursor:pointer;background:#000}
+.thumb-video video{display:block;width:100%;height:180px;object-fit:cover;transition:transform .6s}
+.thumb-video .lecture{position:absolute;left:12px;bottom:12px;padding:5px 12px;border-radius:99px;background:rgba(5,28,36,.78);color:#fff;font:700 .85rem Manrope,sans-serif;pointer-events:none}
+.thumb-video:focus-visible{outline:3px solid var(--sky);outline-offset:-3px}
+@media(hover:hover){.work:hover .thumb-video video{transform:scale(1.07)}}
