@@ -125,7 +125,8 @@
   fetch(DATA)
     .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
     .then(function (all) {
-      var p = all.filter(function (x) { return x.id === id; })[0] || (id ? null : all[0]);
+      var ref = (id || '').trim().toLowerCase();
+      var p = all.filter(function (x) { return String(x.id).toLowerCase() === ref || String(x.titre).toLowerCase() === ref; })[0] || (id ? null : all[0]);
       if (!p) { root.innerHTML = '<section><div class="wrap"><p class="lead">Ce projet est introuvable. <a href="index.html#portfolio">Retour au portfolio</a></p></div></section>'; return; }
       render(p, all);
     })
