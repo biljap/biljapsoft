@@ -120,3 +120,4 @@ footer b{color:#fff;font-family:Manrope,sans-serif}
 .thumb-video .lecture{position:absolute;left:12px;bottom:12px;padding:5px 12px;border-radius:99px;background:rgba(5,28,36,.78);color:#fff;font:700 .85rem Manrope,sans-serif;pointer-events:none}
 .thumb-video:focus-visible{outline:3px solid var(--sky);outline-offset:-3px}
 @media(hover:hover){.work:hover .thumb-video video{transform:scale(1.07)}}
+.lb video{display:block;width:100%;max-height:78vh;border-radius:14px;background:#000}
