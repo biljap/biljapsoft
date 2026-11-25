@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 854 480" width="854" height="480">
+  <defs>
+    <style>
+      .title-white { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 38px; fill: #ffffff; letter-spacing: 1px; }
+      .sub-cyan { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 16px; fill: #0099d8; letter-spacing: 0.8px; }
+      .logo-cyan { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 28px; font-weight: bold; fill: #0099d8; letter-spacing: 1px; }
+      .logo-sub { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 7.5px; fill: #6c7a89; letter-spacing: 0.5px; }
+      .desc-text { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size: 40px; fill: #0d212c; font-weight: 500; }
+    </style>
+  </defs>
+
+  <rect width="854" height="280" fill="#2c3539" />
+
+  <text x="68" y="68" class="title-white">BILJAP SOFT</text>
+  <text x="69" y="86" class="sub-cyan">CREATIVITY &amp; INNOVATION</text>
+
+  <g transform="translate(645, 32)">
+    <path d="M 15 5 C 32 5, 35 22, 22 28 C 38 33, 35 55, 15 55 C 5 55, 2 45, 2 30 C 2 15, 5 5, 15 5 Z" fill="none" stroke="#0099d8" stroke-width="2.5" />
+    <path d="M 18 11 C 28 11, 30 22, 20 27 C 31 31, 29 49, 18 49 C 11 49, 9 42, 9 30 C 9 18, 11 11, 18 11 Z" fill="none" stroke="#0099d8" stroke-width="1.5" />
+    <text x="40" y="34" class="logo-cyan">BILJAP</text>
+    <text x="41" y="44" class="logo-sub">CREATIVITY &amp; INNOVATION</text>
+  </g>
+
+  <path d="M 0 245 Q 210 185, 435 225 T 854 190 L 854 480 L 0 480 Z" fill="#ffffff" />
+
+  <path d="M 0 257 Q 210 197, 435 237 T 854 202 L 854 480 L 0 480 Z" fill="#1592d1" />
+
+  <text x="427" y="362" text-anchor="middle" class="desc-text">Description</text>
+</svg>
