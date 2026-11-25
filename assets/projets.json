@@ -36,9 +36,9 @@
     "unite": "publication"
   },
   {
-    "id": "biljap-soft",
+    "id": "biljap-annonce",
     "exemple": false,
-    "titre": "Biljap soft",
+    "titre": "Biljap annonce",
     "categorie": "Vidéo promotionnelle",
     "secteur": "Agence de création visuelle et numérique",
     "prestations": ["Vidéo de 06 secondes", "Montage court"],
