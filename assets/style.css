@@ -25,7 +25,7 @@ header{background:var(--ink);color:#fff}
 .bar a.tel{color:#fff;font-weight:700;text-decoration:none;border:2px solid var(--brand);border-radius:99px;padding:8px 16px}
 
 /* Héros */
-.hero{position:relative;overflow:hidden;padding:56px 0 0px}
+.hero{position:relative;overflow:hidden;padding:56px 0 222px}
 .hero .art{position:absolute;right:-30px;bottom:-10px;width:min(360px,80vw);opacity:.22;pointer-events:none}
 @media(min-width:720px){.hero .art{right:4%;bottom:auto;top:50%;transform:translateY(-50%);width:380px;opacity:.95}}
 .hero h1{font-size:clamp(2.2rem,9vw,4.2rem);font-weight:800;max-width:14ch;position:relative}
