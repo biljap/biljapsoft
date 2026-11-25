@@ -14,7 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js" defer></script>
 <script src="assets/supabase-config.js?v=3" defer></script>
 <script src="assets/visites.js?v=3" defer></script>
-<script src="assets/compte.js?v=3" defer></script>
+<script src="assets/compte.js?v=4" defer></script>
 </head>
 <body>
 <header>
@@ -42,7 +42,7 @@
         <input id="c-email" name="email" type="email" autocomplete="email" required>
         <label for="c-mdp">Mot de passe</label>
         <input id="c-mdp" name="mdp" type="password" autocomplete="current-password" required>
-        <button class="btn main full" type="submit">Se connecter</button>
+        <button class="btn main full" type="submit">Me connecter</button>
         <button class="lien" type="button" id="oubli">Mot de passe oublié ?</button>
       </form>
       <form id="f-inscription" novalidate hidden>
@@ -54,7 +54,7 @@
         <input id="i-email" name="email" type="email" autocomplete="email" required>
         <label for="i-mdp">Mot de passe (8 caractères minimum)</label>
         <input id="i-mdp" name="mdp" type="password" autocomplete="new-password" minlength="8" required>
-        <button class="btn main full" type="submit">Créer un compte</button>
+        <button class="btn main full" type="submit">Créer mon compte</button>
       </form>
       <p class="msg" id="msg-auth" role="status" aria-live="polite"></p>
     </div>
@@ -78,7 +78,7 @@
 
 <section id="vue-client" hidden>
   <div class="wrap">
-    <div class="entete"><h2 id="bonjour">Bonjour</h2><button class="lien" type="button" id="deco">Se déconnecter</button></div>
+    <div class="entete"><h2 id="bonjour">Bonjour</h2><button class="lien" type="button" id="deco">Me déconnecter</button></div>
     <p class="lead">Vos commandes réussies chez Biljap Soft.</p>
     <div class="liste" id="mes-commandes"></div>
     <p class="note">Une question sur une commande ? <a href="https://wa.me/243899829244">Écrivez-nous sur WhatsApp</a>.</p>
@@ -90,6 +90,20 @@
     <h2>Tableau de bord</h2>
     <p class="lead">Réservé à l’administrateur.</p>
     <div class="stats" id="stats"></div>
+
+    <h3 class="sous">Visiteurs et clients</h3>
+    <details class="repli" id="det-visiteurs">
+      <summary>Visiteurs du site <span id="nb-visiteurs"></span></summary>
+      <p class="aide">Les visiteurs sont anonymes : chacun est reconnu par un identifiant aléatoire gardé sur son appareil.</p>
+      <div class="liste" id="liste-visiteurs"></div>
+      <p class="msg" id="msg-vis" role="status" aria-live="polite"></p>
+      <button class="btn line" type="button" id="plus-visiteurs" hidden>Voir plus</button>
+    </details>
+    <details class="repli" id="det-clients">
+      <summary>Clients inscrits <span id="nb-clients"></span></summary>
+      <div class="liste" id="liste-clients"></div>
+      <p class="msg" id="msg-cli" role="status" aria-live="polite"></p>
+    </details>
 
     <h3 class="sous">Enregistrer une commande réussie</h3>
     <form id="f-commande" class="card large" novalidate>
