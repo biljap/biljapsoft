@@ -107,10 +107,55 @@
       : '<p class="vide">Aucune commande enregistrée pour le moment.</p>';
   }
 
+  /* Listes de l'administrateur : visiteurs anonymes et clients inscrits */
+  var PAGE = 25, vDecalage = 0, vTotal = 0, vCharge = false, cCharge = false;
+  function heure(t) { return new Date(t).toLocaleString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+  function visiteurs() {
+    var m = $('#msg-vis'), box = $('#liste-visiteurs'), plus = $('#plus-visiteurs');
+    plus.disabled = true;
+    return db.rpc('liste_visiteurs', { p_limite: PAGE, p_decalage: vDecalage }).then(function (r) {
+      plus.disabled = false;
+      if (r.error) {
+        dire(m, /could not find the function|PGRST202/i.test(r.error.message || '') ? 'La liste n’est pas encore activée : exécutez le script 3-liste-visiteurs.sql dans Supabase.' : 'Impossible de charger les visiteurs : ' + r.error.message, 'err');
+        return;
+      }
+      dire(m, '');
+      vCharge = true;
+      box.insertAdjacentHTML('beforeend', r.data.map(function (v) {
+        return '<article class="cmd"><h3>Visiteur ' + esc(String(v.visiteur_id).slice(0, 8)) + '</h3>' +
+          '<small>Première visite : ' + esc(heure(v.premiere_visite)) + '</small><small>Dernière visite : ' + esc(heure(v.derniere_visite)) + '</small>' +
+          '<div class="m">' + esc(v.nb_visites) + (v.nb_visites > 1 ? ' visites' : ' visite') + '</div></article>';
+      }).join(''));
+      vDecalage += r.data.length;
+      if (!vDecalage) box.innerHTML = '<p class="vide">Aucun visiteur enregistré pour le moment.</p>';
+      plus.hidden = r.data.length < PAGE || (vTotal > 0 && vDecalage >= vTotal);
+    });
+  }
+  function clients() {
+    var m = $('#msg-cli'), box = $('#liste-clients');
+    return db.from('profiles').select('nom,email,telephone,created_at').eq('role', 'client').order('created_at', { ascending: false }).limit(200).then(function (r) {
+      if (r.error) { dire(m, 'Impossible de charger les clients : ' + r.error.message, 'err'); return; }
+      cCharge = true;
+      $('#nb-clients').textContent = '(' + r.data.length + ')';
+      box.innerHTML = r.data.length ? r.data.map(function (c) {
+        var chiffres = String(c.telephone || '').replace(/\D/g, '');
+        return '<article class="cmd"><h3>' + esc(c.nom || 'Sans nom') + '</h3><small>' + esc(c.email) + '</small>' +
+          (chiffres.length >= 8 ? '<small><a href="https://wa.me/' + chiffres + '">WhatsApp ' + esc(c.telephone) + '</a></small>' : '') +
+          '<small>Inscrit le ' + esc(jour(c.created_at)) + '</small></article>';
+      }).join('') : '<p class="vide">Aucun client inscrit pour le moment.</p>';
+    });
+  }
+  $('#det-visiteurs').addEventListener('toggle', function () { if (this.open && !vCharge) visiteurs(); });
+  $('#det-clients').addEventListener('toggle', function () { if (this.open && !cCharge) clients(); });
+  $('#plus-visiteurs').addEventListener('click', function () { visiteurs(); });
+
   /* Tableau de bord administrateur */
   async function tableauDeBord() {
     var s = await db.rpc('stats_visites'), c = await db.from('commandes').select('montant_usd').eq('statut', 'reussie');
-    var st = s.data || {}, lignes = c.data || [], ca = lignes.reduce(function (t, x) { return t + Number(x.montant_usd); }, 0);
+    var st = s.data || {};
+    vTotal = Number(st.visiteurs_uniques) || 0;
+    $('#nb-visiteurs').textContent = vTotal ? '(' + vTotal + ')' : '';
+    var lignes = c.data || [], ca = lignes.reduce(function (t, x) { return t + Number(x.montant_usd); }, 0);
     function cell(v, l) { return '<div class="stat"><b>' + esc(v) + '</b><span>' + l + '</span></div>'; }
     $('#stats').innerHTML = cell(st.visiteurs_uniques == null ? '–' : st.visiteurs_uniques, 'visiteurs uniques') +
       cell(st.visites_totales == null ? '–' : st.visites_totales, 'visites au total') +
