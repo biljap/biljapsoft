@@ -52,7 +52,8 @@
     "service": "Vidéos promotionnelles",
     "prix": "dès 35 $",
     "unite": "montage court",
-    "poster": "assets/banniere-biljap.svg"
+    "poster": "assets/banniere-biljap.svg",
+    "video_mp4": "assets/projet-mukuba-fitness.mp4"
   },
   {
     "id": "calendrier-katanga-immo",
