@@ -46,16 +46,13 @@
     "besoin": "Annoncer les domaines d'intervention en quelques secondes, sur des réseaux où l’on fait défiler très vite.",
     "approche": "Un montage court et rythmé, avec une accroche dès la première seconde et l'identité de la marque reconnue dès la première vue.",
     "resultat": "Une vidéo de 06 secondes prête à publier, qui donne envie de passer la commande.",
-    "image": "assets/projet-mukuba-fitness.webm",
+    "image": "assets/projet-mukuba-fitness.mp4",
     "alt": "Haltère avec bouton de lecture vidéo",
     "galerie": [],
     "service": "Vidéos promotionnelles",
     "prix": "dès 35 $",
     "unite": "montage court",
-    "poster": "assets/banniere-biljap.svg",
-    "video_mp4": "assets/projet-mukuba-fitness.mp4"
-
-    
+    "poster": "assets/banniere-biljap.svg"
   },
   {
     "id": "calendrier-katanga-immo",
