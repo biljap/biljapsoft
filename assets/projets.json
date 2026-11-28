@@ -37,7 +37,7 @@
   },
   {
     "id": "biljap-annonce",
-    "exemple": false,
+    "exemple": true,
     "titre": "Biljap annonce",
     "categorie": "Vidéo promotionnelle",
     "secteur": "Agence de création visuelle et numérique",
